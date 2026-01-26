@@ -28,7 +28,7 @@ services:
     ports:
       - "6789:6789"
     volumes:
-      - mage-data:/home/src
+      - .:/home/src
     environment:
       - MAGE_DATABASE_CONNECTION_URL=postgresql://postgres_user:postgres_password@postgres:5432/postgres_db
 
@@ -43,4 +43,3 @@ services:
 
 volumes:
   db-data:
-  mage-data:
