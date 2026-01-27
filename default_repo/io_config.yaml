@@ -3,10 +3,10 @@ default:
   # Default profile created for data IO access.
   # Add your credentials for the source you use, and delete the rest.
   # AWS
-  AWS_ACCESS_KEY_ID: "{{ env_var('AWS_ACCESS_KEY_ID') }}"
-  AWS_SECRET_ACCESS_KEY: "{{ env_var('AWS_SECRET_ACCESS_KEY') }}"
-  AWS_SESSION_TOKEN: session_token (Used to generate Redshift credentials)
-  AWS_REGION: region
+  QBO_CLIENT_ID: "ABl27CQFyuVV997d1dsueD05XKZ16nbCrAkcx9yFEKSsE8y5ya"
+  QBO_CLIENT_SECRET: "YSTZeUWcaItcixfoRGTfqBVMpGx5sgiKdbx1Xq03"
+  QBO_REFRESH_TOKEN: "RT1-201-H0-1778203857y1jz87dcu82p8rn372l4"
+  QBO_REALM_ID: "9341456217177506"
   # Algolia
   ALGOLIA_APP_ID: app_id
   ALGOLIA_API_KEY: api_key
@@ -83,11 +83,11 @@ default:
   PINOT_USER: user
   # PostgresSQL
   POSTGRES_CONNECT_TIMEOUT: 10
-  POSTGRES_DBNAME: postgres
-  POSTGRES_SCHEMA: public # Optional
-  POSTGRES_USER: username
-  POSTGRES_PASSWORD: password
-  POSTGRES_HOST: hostname
+  POSTGRES_DBNAME: postgres_db
+  POSTGRES_SCHEMA: raw # Optional
+  POSTGRES_USER: postgres_user
+  POSTGRES_PASSWORD: postgres_password
+  POSTGRES_HOST: postgres
   POSTGRES_PORT: 5432
   # Qdrant
   QDRANT_COLLECTION: collection

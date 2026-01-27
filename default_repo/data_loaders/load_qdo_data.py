@@ -115,7 +115,7 @@ def load_data(*args, **kwargs):
                         continue
 
                     if response.status_code == 429:
-                        wait_time = 2 ** attempt .
+                        wait_time = 2 ** attempt 
                         log("WARN", f"Rate Limit (429). Esperando {wait_time}s antes del reintento {attempt+1}/{max_retries}...")
                         time.sleep(wait_time)
                         continue
@@ -137,41 +137,41 @@ def load_data(*args, **kwargs):
                     log("ERROR", "Error de conexion: {e}")
                     time.sleep(2 ** attempt)
                 
-                if not success:
-                    log("ERROR", "Se extendieron los intentos para el dia: {current_date.date()}")
-                    break
+            if not success:
+                log("ERROR", "Se extendieron los intentos para el dia: {current_date.date()}")
+                break
 
-                data = response.json()
-                batch = data.get('QueryResponse', {}).get('Customer', [])
+            data = response.json()
+            batch = data.get('QueryResponse', {}).get('Customer', [])
 
-                if not batch:
-                    break
+            if not batch:
+                break
 
-                daily_pages += 1
-                daily_rows += len(batch)
+            daily_pages += 1
+            daily_rows += len(batch)
 
-                ingestion_time = datetime.now(pytz.utc)
+            ingestion_time = datetime.now(pytz.utc)
 
-                for item in batch:
-                    record = {
-                        'id': item['Id'], 
-                        'payload': item,  
-                        'ingested_at_utc': ingestion_time,
-                        'extract_window_start_utc': start_fmt,
-                        'extract_window_end_utc': end_fmt,
-                        'page_number': (start_position // max_results) + 1,
-                        'page_size': len(batch),
-                        'request_payload': query 
-                    }
-                    all_records.append(record)
+            for item in batch:
+                record = {
+                    'id': item['Id'], 
+                    'payload': item,  
+                    'ingested_at_utc': ingestion_time,
+                    'extract_window_start_utc': start_fmt,
+                    'extract_window_end_utc': end_fmt,
+                    'page_number': (start_position // max_results) + 1,
+                    'page_size': len(batch),
+                    'request_payload': query 
+                }
+                all_records.append(record)
 
-                start_position += max_results
-                if len(batch) < max_results:
-                    break
+            start_position += max_results
+            if len(batch) < max_results:
+                break
                 
 
         chunk_duration = time.time() - chunk_start_time
-    log("METRIC", f"Día: {current_date.date()} | Filas: {daily_rows} | Duración: {duration:.2f}s")
+        log("METRIC", f"Día: {current_date.date()} | Filas: {daily_rows} | Duración: {chunk_duration:.2f}s")
 
         if daily_rows > 0:
             log("REPORTE", f"Reporte tramo {current_data.date()}:")
