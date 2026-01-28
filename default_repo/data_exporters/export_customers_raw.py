@@ -1,4 +1,5 @@
 from mage_ai.data_preparation.shared.secrets import get_secret_value
+from datetime import datetime
 import psycopg2
 import json
 import pandas as pd
@@ -66,14 +67,14 @@ def export_data(data, *args, **kwargs):
                     row['extract_window_end_utc'],
                     row['page_number'],
                     row['page_size'],
-                    json.dump(row['request_payload'])
+                    json.dumps(row['request_payload'])
                 ))
                 success_count += 1
             except Exception as e:
                 error_count += 1
-                log("ROW_ERROR", f"Fallo en ID {row.get('id', 'unknown')}: {row_error}")
+                log("ROW_ERROR", f"Fallo en ID {row.get('id', 'unknown')}: {e}")
                 conn.rollback()
-                raise row_error
+                raise e
 
         
         conn.commit()

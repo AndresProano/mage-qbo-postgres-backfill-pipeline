@@ -215,7 +215,214 @@ Esta sección cubre los escenarios de fallo comunes relacionados con autenticaci
 
 ---
 
-## 9. Estructura del Proyecto
+
+## 9. Evidencias
+
+> **Ubicación:** carpeta `evidencias/`
+
+La carpeta `evidencias/` contiene capturas de pantalla que respaldan la correcta configuración, ejecución y validación del pipeline ETL, demostrando el cumplimiento de los requisitos académicos y técnicos del proyecto.
+
+---
+
+### 9.1 Configuración de Secrets en Mage
+
+Se evidencia la correcta configuración de *secrets* en Mage.  
+Por razones de seguridad, se visualizan únicamente los **nombres de las variables**, manteniendo los **valores ocultos**.
+
+<details>
+<summary>Ver Evidencias de Secrets – Customers</summary>
+
+![Secrets](evidencias/secrets/secrets.png)
+
+</details>
+
+---
+
+### 9.2 Triggers one-time y ejecuciones exitosas
+
+Se documenta la configuración y ejecución de triggers tipo **one-time** para los pipelines **Customers**, **Invoices** e **Items**, incluyendo configuración, variables de runtime (`fecha_inicio`, `fecha_fin`) y logs con estado **Success**.
+
+#### Evidencia general de triggers
+
+<details>
+<summary>Ver Evidencias Generales de Triggers</summary>
+
+![TriggersGeneral](evidencias/triggers/triggers.png)
+
+</details>
+
+#### Customers
+
+<details>
+<summary>Configuración del Trigger – Customers</summary>
+
+![TriggerCustomer](evidencias/triggers/triggers_customers.png)
+
+</details>
+
+<details>
+<summary>Logs de Ejecución – Customers</summary>
+
+![TriggerCustomerLogs](evidencias/triggers/triggers_customers_logs.png)
+
+</details>
+
+#### Invoices
+
+<details>
+<summary>Configuración del Trigger – Invoices</summary>
+
+![TriggerInvoices](evidencias/triggers/trigger_invoices.png)
+
+</details>
+
+<details>
+<summary>Logs de Ejecución – Invoices</summary>
+
+![TriggerInvoicesLogs](evidencias/triggers/triggers_invoices_logs.png)
+
+</details>
+
+#### Items
+
+<details>
+<summary>Configuración del Trigger – Items</summary>
+
+![TriggerItems](evidencias/triggers/trigger_items.png)
+
+</details>
+
+<details>
+<summary>Logs de Ejecución – Items</summary>
+
+![TriggerItemsLogs](evidencias/triggers/triggers_items_logs.png)
+
+</details>
+
+---
+
+### 9.3 Tablas Raw y metadatos de auditoría
+
+Se incluyen evidencias de las tablas *raw* generadas por el pipeline ETL, mostrando registros y columnas de auditoría que garantizan trazabilidad.
+
+#### raw.qb_customers
+
+<details>
+<summary>Ver Evidencias de Raw Customers</summary>
+
+![RawCustomers](evidencias/raw/raw_customers.png)
+
+</details>
+
+#### raw.qb_invoices
+
+<details>
+<summary>Ver Evidencias de Raw Invoices</summary>
+
+![RawInvoices](evidencias/raw/raw_invoices.png)
+
+</details>
+
+#### raw.qb_items
+
+<details>
+<summary>Ver Evidencias de Raw Items</summary>
+
+![RawItems](evidencias/raw/raw_items.png)
+
+</details>
+
+En todas las tablas se observan columnas como `ingested_at_utc`, ventanas de extracción y `page_number`.
+
+---
+
+### 9.4 Volumetría e idempotencia
+
+#### Volumetría
+
+<details>
+<summary>Volumetría – Customers</summary>
+
+![VolumetriaCustomers](evidencias/volumetria/volumetria_customers.png)
+
+</details>
+
+<details>
+<summary>Volumetría – Invoices</summary>
+
+![VolumetriaInvoices](evidencias/volumetria/volumetria_invoices.png)
+
+</details>
+
+<details>
+<summary>Volumetría – Items</summary>
+
+![VolumetriaItems](evidencias/volumetria/volumetria_items.png)
+
+</details>
+
+#### Idempotencia
+
+La idempotencia se valida mediante la reejecución del pipeline, comparando conteos y fechas de ingesta antes y después.
+
+##### Customers
+
+<details>
+<summary>Antes de la Reejecución – Customers</summary>
+
+![BeforeCustomers1](evidencias/idempotencia/idempotencia_before_customers.png)
+![BeforeCustomers2](evidencias/idempotencia/idempotencia_beforeCustomers.png)
+
+</details>
+
+<details>
+<summary>Después de la Reejecución – Customers</summary>
+
+![AfterCustomers1](evidencias/idempotencia/idempotencia_after_customers.png)
+![AfterCustomers2](evidencias/idempotencia/idempotencia_afterCustomers.png)
+
+</details>
+
+##### Invoices
+
+<details>
+<summary>Antes de la Reejecución – Invoices</summary>
+
+![BeforeInvoices1](evidencias/idempotencia/idempotencia_before_invoices.png)
+![BeforeInvoices2](evidencias/idempotencia/idempotencia_beforeInvoices.png)
+
+</details>
+
+<details>
+<summary>Después de la Reejecución – Invoices</summary>
+
+![AfterInvoices1](evidencias/idempotencia/idempotencia_after_invoices.png)
+![AfterInvoices2](evidencias/idempotencia/idempotencia_afterInvoices.png)
+
+</details>
+
+##### Items
+
+<details>
+<summary>Antes de la Reejecución – Items</summary>
+
+![BeforeItems1](evidencias/idempotencia/idempotencia_before_items.png)
+![BeforeItems2](evidencias/idempotencia/idempotencia_beforeItems.png)
+
+</details>
+
+<details>
+<summary>Después de la Reejecución – Items</summary>
+
+![AfterItems1](evidencias/idempotencia/idempotencia_after_items.png)
+![AfterItems2](evidencias/idempotencia/idempotencia_afterItems.png)
+
+</details>
+
+Se confirma que los conteos permanecen constantes y que los registros se actualizan mediante lógica de *upsert*, sin generar duplicados.
+
+
+## 10. Estructura del Proyecto
 
 ```text
 ├── pipelines/             # Pipelines Mage
@@ -242,3 +449,4 @@ Esta sección cubre los escenarios de fallo comunes relacionados con autenticaci
 * [x] Idempotencia validada (sin duplicados)
 * [x] Rate limits y reintentos documentados
 * [x] Volumetría y validaciones registradas
+

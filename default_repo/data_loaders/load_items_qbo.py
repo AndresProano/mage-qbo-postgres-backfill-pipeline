@@ -96,7 +96,7 @@ def load_data(*args, **kwargs):
 
         while True:
             query = (
-                f"SELECT * FROM Invoice "
+                f"SELECT * FROM Item "
                 f"WHERE MetaData.LastUpdatedTime >= '{start_fmt}' "
                 f"AND MetaData.LastUpdatedTime <= '{end_fmt}' "
                 f"STARTPOSITION {start_position} MAXRESULTS {max_results}"
@@ -142,7 +142,7 @@ def load_data(*args, **kwargs):
                 break
 
             data = response.json()
-            batch = data.get('QueryResponse', {}).get('Invoice', [])
+            batch = data.get('QueryResponse', {}).get('Item', [])
 
             if not batch:
                 break
@@ -174,7 +174,7 @@ def load_data(*args, **kwargs):
         log("METRIC", f"Día: {current_date.date()} | Filas: {daily_rows} | Duración: {chunk_duration:.2f}s")
 
         if daily_rows > 0:
-            log("REPORTE", f"Reporte tramo {current_data.date()}:")
+            log("REPORTE", f"Reporte tramo {current_date.date()}:")
             log("REPORTE", f"Paginas: {daily_pages}")
             log("REPORTE", f"Filas: {daily_rows}")
             log("REPORTE", f"Duracion: {chunk_duration:.2f}")

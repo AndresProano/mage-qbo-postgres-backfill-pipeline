@@ -174,7 +174,7 @@ def load_data(*args, **kwargs):
         log("METRIC", f"Día: {current_date.date()} | Filas: {daily_rows} | Duración: {chunk_duration:.2f}s")
 
         if daily_rows > 0:
-            log("REPORTE", f"Reporte tramo {current_data.date()}:")
+            log("REPORTE", f"Reporte tramo {current_date.date()}:")
             log("REPORTE", f"Paginas: {daily_pages}")
             log("REPORTE", f"Filas: {daily_rows}")
             log("REPORTE", f"Duracion: {chunk_duration:.2f}")
